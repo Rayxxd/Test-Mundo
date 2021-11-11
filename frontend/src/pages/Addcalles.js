@@ -21,6 +21,8 @@ const Editcalles = () => {
 
         if (res.data.status === 200) {
             setRegiones(res.data.regiones)
+        }else{
+            console.log(res.data.status)
         }
     }
     
@@ -40,6 +42,8 @@ const Editcalles = () => {
             setProvincias(pro.data.provincias)
             setCiudades([])
 
+        }else{
+            console.log(pro.data.status)
         }
     }
 
@@ -56,6 +60,8 @@ const Editcalles = () => {
                 
             }
             setForm(data)
+        }else{
+            console.log(ciu.data.status)
         }
     }
 
@@ -97,7 +103,7 @@ const Editcalles = () => {
                 button: null,
                 timer:"1000"
             });
-            
+
         }else {
             console.log(x.data.error)
             return swal({

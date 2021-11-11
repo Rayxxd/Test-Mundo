@@ -22,7 +22,9 @@ class CallesController extends Controller
             ]);
           
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => 500
+            ]);
         }
     }
 
@@ -44,21 +46,29 @@ class CallesController extends Controller
             ]);
         }
 
-        $calle = new Calle;
-        $calle->nombre = $request->name;
-        $calle->ciudad_id = $request->ciudad;
-        $calle->save();
+        try {
+            $calle = new Calle;
+            $calle->nombre = $request->name;
+            $calle->ciudad_id = $request->ciudad;
+            $calle->save();
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'calle agregada'
-        ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'calle agregada'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'error' => 'Error 500',
+            ]);
+        }
+        
     }
 
-    public function calles($id)
+    public function calles($id_ciudad)
     {
         try {
-            $calles =  Calle::where('ciudad_id',$id)->get();
+            $calles =  Calle::where('ciudad_id',$id_ciudad)->get();
         
             return response()->json([
                 'status' => 200,
@@ -90,14 +100,22 @@ class CallesController extends Controller
             ]);
         }
 
-        $calle = Calle::find($id);
-        $calle->nombre = $request->name;
-        $calle->ciudad_id = $request->ciudad;
-        $calle->update();
+        try {
+            $calle = Calle::find($id);
+            $calle->nombre = $request->name;
+            $calle->ciudad_id = $request->ciudad;
+            $calle->update();
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Calle actualizada'
-        ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Calle actualizada'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'error' => 'error 500',
+            ]);
+        }
+        
     }
 }

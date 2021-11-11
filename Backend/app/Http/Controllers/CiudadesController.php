@@ -16,7 +16,9 @@ class CiudadesController extends Controller
                 'ciudades' => $ciud
             ]);
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => 500
+            ]);
         }
         
     }

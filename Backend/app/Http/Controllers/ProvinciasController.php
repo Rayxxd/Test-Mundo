@@ -18,7 +18,9 @@ class ProvinciasController extends Controller
             ]);
             
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => 500
+            ]);
         }
         
     }

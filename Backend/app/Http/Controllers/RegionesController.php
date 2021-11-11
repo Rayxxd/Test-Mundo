@@ -20,7 +20,9 @@ class RegionesController extends Controller
                 'regiones' => $region
             ]);
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json([
+                'status' => 500
+            ]);
         }
         
     }

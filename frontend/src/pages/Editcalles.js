@@ -35,6 +35,8 @@ const Editcalles = () => {
             cargaRegiones()
             cargaProvincias(res.data.region.id)
             cargaCiudades(res.data.provincia.id)
+        }else{
+            console.log(res.data.status)
         }
     }
     
@@ -45,6 +47,8 @@ const Editcalles = () => {
             setRegiones(
                 res.data.regiones
             )
+        }else{
+            console.log(res.data.status)
         }
     }
 
@@ -55,6 +59,8 @@ const Editcalles = () => {
             setProvincias(pro.data.provincias)
             setCiudades([])
           
+        }else{
+            console.log(pro.data.status)
         }
     }
     
@@ -64,6 +70,8 @@ const Editcalles = () => {
         if (ci.data.status === 200) {
             setCiudades(ci.data.ciudades)
 
+        }else{
+            console.log(ci.data.status)
         }
     }
 

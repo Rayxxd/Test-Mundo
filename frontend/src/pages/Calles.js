@@ -9,17 +9,7 @@ const Calles = () => {
     const [ciudades, setCiudades] = useState([]);
     const [calles, setCalles] = useState([]);
 
-    useEffect(() => {
-        async function cargaRegiones() {
-            const res = await axios.get('http://127.0.0.1:8000/api/regiones');
-
-            if (res.data.status === 200) {
-                setRegiones(res.data.regiones)
-            }
-        }
-        cargaRegiones()
-
-    }, []);
+   
 
     const cambioregion = async (event) => {
         let x = event.target.value;
@@ -29,6 +19,8 @@ const Calles = () => {
             setProvincias(pro.data.provincias)
             setCiudades([])
             setCalles([])
+        }else{
+            console.log(pro.data.status)
         }
     }
 
@@ -39,6 +31,8 @@ const Calles = () => {
         if (ciu.data.status === 200) {
             setCiudades(ciu.data.ciudades)
             setCalles([])
+        }else{
+            console.log(ciu.data.status)
         }
     }
 
@@ -50,8 +44,25 @@ const Calles = () => {
             setCalles(
                 call.data.calles
             )
+        }else{
+            console.log(call.data.status)
         }
     }
+
+    useEffect(() => {
+        async function cargaRegiones() {
+            const res = await axios.get('http://127.0.0.1:8000/api/regiones');
+
+            if (res.data.status === 200) {
+                setRegiones(res.data.regiones)
+            }else{
+                console.log(res.data.status);
+            }
+        }
+        cargaRegiones()
+
+    }, []);
+
 
     return (
         <div className="container">
@@ -59,7 +70,7 @@ const Calles = () => {
                 <div className="col-md-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4>Calles
+                            <h4>Prueba Mundo
                                 <Link to={'add-calle'} className="btn btn-primary btn-sm float-end">Agregar Calle</Link>
                             </h4>
                         </div>
