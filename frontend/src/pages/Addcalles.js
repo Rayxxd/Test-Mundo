@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -17,18 +17,18 @@ const Editcalles = () => {
     const [ciudades, setCiudades] = useState([]);
 
     async function cargaRegiones() {
-        const res = await axios.get('http://127.0.0.1:8000/api/regiones');
+        const res = await axios.get('http://localhost:8000/api/regiones');
 
         if (res.data.status === 200) {
             setRegiones(res.data.regiones)
-        }else{
+        } else {
             console.log(res.data.status)
         }
     }
-    
+
     const cambioRegion = async (event) => {
         let x = event.target.value;
-        let pro = await axios.get('http://127.0.0.1:8000/api/provincias/' + x)
+        let pro = await axios.get('http://localhost:8000/api/provincias/' + x)
 
         if (pro.data.status === 200) {
             const data = {
@@ -36,20 +36,20 @@ const Editcalles = () => {
                 region: x,
                 provincia: '',
                 ciudad: '',
-                
+
             }
             setForm(data)
             setProvincias(pro.data.provincias)
             setCiudades([])
 
-        }else{
+        } else {
             console.log(pro.data.status)
         }
     }
 
     const cambioProvincia = async (event) => {
         let x = event.target.value;
-        let ciu = await axios.get('http://127.0.0.1:8000/api/ciudades/' + x)
+        let ciu = await axios.get('http://localhost:8000/api/ciudades/' + x)
 
         if (ciu.data.status === 200) {
             setCiudades(ciu.data.ciudades)
@@ -57,10 +57,10 @@ const Editcalles = () => {
                 ...form,
                 provincia: x,
                 ciudad: '',
-                
+
             }
             setForm(data)
-        }else{
+        } else {
             console.log(ciu.data.status)
         }
     }
@@ -70,7 +70,7 @@ const Editcalles = () => {
         const data = {
             ...form,
             ciudad: x,
-            
+
         }
         setForm(data)
     }
@@ -85,45 +85,44 @@ const Editcalles = () => {
 
     async function addCalle(e) {
         e.preventDefault();
-        const data = {...form}
+        const data = { ...form }
         console.log(data);
-        if(data.ciudad === '' || data.provincia === '' || !data.name.trim() || data.name === null){
+        if (data.ciudad === '' || data.provincia === '' || !data.name.trim() || data.name === null) {
             return swal({
-                text: "por favor, rellena todos los campos",
+                text: "Por favor, rellena todos los campos",
                 icon: "error"
             });
         }
-        
-        let x = await axios.post('http://127.0.0.1:8000/api/add-calle', form)
-        
+
+        let x = await axios.post('http://localhost:8000/api/add-calle', form)
+
         if (x.data.status === 200) {
             return swal({
                 text: "Calle agregada",
                 icon: "success",
                 button: null,
-                timer:"1000"
+                timer: "1000"
             });
 
-        }else {
+        } else {
             console.log(x.data.error)
             return swal({
                 text: x.data.error,
                 icon: "error"
-
             });
         }
-        
+
     }
-   
+
 
     useEffect(() => {
-        
+
         cargaRegiones()
-       
+
     }, []);
 
     return (
-        
+
         <div className="container">
             <div className="form-group">
                 <div className="col-md-12">
@@ -137,11 +136,12 @@ const Editcalles = () => {
                             <form onSubmit={addCalle}>
                                 <div className="form-group mb-3">
                                     <label>Nombre</label>
-                                    <input type="text" name="name" defaultValue={form.name} className="form-control" onChange={(e) => cambioNombre(e.target.value)} required/>
+                                    <input type="text" name="name" defaultValue={form.name} className="form-control" onChange={(e) => cambioNombre(e.target.value)} required />
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label>Region</label>
+                                    <label>Región</label>
                                     <select className="form-control" defaultValue={form.region} onChange={cambioRegion} >
+                                        <option>Seleccione una región</option>
                                         {regiones.map(item =>
                                             <option key={item.id} value={item.id}>{item.nombre}</option>
                                         )}

@@ -18,30 +18,10 @@ const Editcalles = () => {
 
     const { id } = useParams();
 
-    async function cargaDatos() {
-            
-        const res = await axios.get('http://127.0.0.1:8000/api/calle/' + id);
-        
-        if (res.data.status === 200) {
-            setForm(
-                {
-                    name: res.data.calle.nombre,
-                    region: res.data.region.id,
-                    provincia: res.data.provincia.id,
-                    ciudad: res.data.ciudad.id
-                }
-            )
-           
-            cargaRegiones()
-            cargaProvincias(res.data.region.id)
-            cargaCiudades(res.data.provincia.id)
-        }else{
-            console.log(res.data.status)
-        }
-    }
+    
     
     async function cargaRegiones() {
-        const res = await axios.get('http://127.0.0.1:8000/api/regiones');
+        const res = await axios.get('http://localhost:8000/api/regiones');
 
         if (res.data.status === 200) {
             setRegiones(
@@ -54,7 +34,7 @@ const Editcalles = () => {
 
     async function cargaProvincias(id) {
 
-        let pro = await axios.get('http://127.0.0.1:8000/api/provincias/' + id)
+        let pro = await axios.get('http://localhost:8000/api/provincias/' + id)
         if (pro.data.status === 200) {
             setProvincias(pro.data.provincias)
             setCiudades([])
@@ -66,7 +46,7 @@ const Editcalles = () => {
     
     async function cargaCiudades(id) {
 
-        let ci = await axios.get('http://127.0.0.1:8000/api/ciudades/' + id)
+        let ci = await axios.get('http://localhost:8000/api/ciudades/' + id)
         if (ci.data.status === 200) {
             setCiudades(ci.data.ciudades)
 
@@ -121,12 +101,12 @@ const Editcalles = () => {
         const data = {...form}
         if(data.ciudad === '' || data.provincia === '' || !data.name.trim() || data.name === null){
             return swal({
-                text: "por favor, rellena todos los campos",
+                text: "Por favor, rellena todos los campos",
                 icon: "error"
             });
         } 
         
-        let x = await axios.post('http://127.0.0.1:8000/api/update-calle/' + id, form)
+        let x = await axios.post('http://localhost:8000/api/update-calle/' + id, form)
         if (x.data.status === 200) {
             return swal({
                 text: "Datos actualizados",
@@ -146,10 +126,30 @@ const Editcalles = () => {
    
 
     useEffect(() => {
-        
+        async function cargaDatos() {
+            
+            const res = await axios.get('http://localhost:8000/api/calle/' + id);
+            
+            if (res.data.status === 200) {
+                setForm(
+                    {
+                        name: res.data.calle.nombre,
+                        region: res.data.region.id,
+                        provincia: res.data.provincia.id,
+                        ciudad: res.data.ciudad.id
+                    }
+                )
+               
+                cargaRegiones()
+                cargaProvincias(res.data.region.id)
+                cargaCiudades(res.data.provincia.id)
+            }else{
+                console.log(res.data.status)
+            }
+        }
         cargaDatos()
        
-    }, []);
+    }, [id]);
 
     return (
         
@@ -169,8 +169,9 @@ const Editcalles = () => {
                                     <input type="text" name="name" defaultValue={form.name} className="form-control" onChange={(e) => cambioNombre(e.target.value)} required/>
                                 </div>
                                 <div className="form-group mb-3">
-                                    <label>Region</label>
+                                    <label>Región</label>
                                     <select className="form-control" value={form.region} onChange={(e) => cambioRegion(e.target.value)} >
+                                        <option>Seleccione una región</option>
                                         {regiones.map(item =>
                                             <option key={item.id} value={item.id}>{item.nombre}</option>
                                         )}
@@ -196,7 +197,7 @@ const Editcalles = () => {
                                 </div>
 
                                 <div className="form-group mb-3">
-                                    <button type="submit" className="btn btn-primary">Actualizar Calle</button>
+                                    <button type="submit" className="btn btn-primary">Editar</button>
                                 </div>
 
                             </form>

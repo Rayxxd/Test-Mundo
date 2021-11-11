@@ -13,8 +13,8 @@ const Calles = () => {
 
     const cambioregion = async (event) => {
         let x = event.target.value;
-        let pro = await axios.get('http://127.0.0.1:8000/api/provincias/' + x)
-
+        let pro = await axios.get('http://localhost:8000/api/provincias/' + x)
+        
         if (pro.data.status === 200) {
             setProvincias(pro.data.provincias)
             setCiudades([])
@@ -26,7 +26,7 @@ const Calles = () => {
 
     const cambioprov = async (event) => {
         let x = event.target.value;
-        let ciu = await axios.get('http://127.0.0.1:8000/api/ciudades/' + x)
+        let ciu = await axios.get('http://localhost:8000/api/ciudades/' + x)
 
         if (ciu.data.status === 200) {
             setCiudades(ciu.data.ciudades)
@@ -38,7 +38,7 @@ const Calles = () => {
 
     const cambiociudad = async (event) => {
         let x = event.target.value;
-        let call = await axios.get('http://127.0.0.1:8000/api/calles/' + x)
+        let call = await axios.get('http://localhost:8000/api/calles/' + x)
 
         if (call.data.status === 200) {
             setCalles(
@@ -51,7 +51,7 @@ const Calles = () => {
 
     useEffect(() => {
         async function cargaRegiones() {
-            const res = await axios.get('http://127.0.0.1:8000/api/regiones');
+            const res = await axios.get('http://localhost:8000/api/regiones');
 
             if (res.data.status === 200) {
                 setRegiones(res.data.regiones)
@@ -79,7 +79,7 @@ const Calles = () => {
                             <Row>
                                 <Col md={3}>
                                     <select name="regiones" id="selRegiones" defaultValue={'DEFAULT'} onChange={cambioregion} className="form-control">
-                                        <option value="DEFAULT" >Seleccione una region</option>
+                                        <option value="DEFAULT" >Seleccione una región</option>
                                         {regiones.map(item => (
                                             <option key={item.id} value={item.id}>{item.nombre}</option>
                                         ))}
