@@ -56,4 +56,5 @@ npm install
 ```bash
 npm start
 ```
-
+## Observación
+Asegúrese que el puerto que esta corriendo la Api sea 'Localhost:8000'
