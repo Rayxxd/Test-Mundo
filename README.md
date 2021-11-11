@@ -56,5 +56,4 @@ npm install
 ```bash
 npm start
 ```
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
