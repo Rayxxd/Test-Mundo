@@ -1,7 +1,7 @@
 # Test-Mundo
 Prueba programador 
 
-## Intalación
+## Instalación
 
 - Instalar Composer desde **(https://getcomposer.org)**
 - Instalar NodeJs desde **(https://node.js.org)**
@@ -14,7 +14,7 @@ git clone https://github.com/Rayxxd/test-mundo.git
 
 ## Backend
 
-- Instalar dependecias en el directorio 'backend'
+- Instalar dependencias en el directorio 'backend'
 ```bash
 composer install
 ```
